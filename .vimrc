@@ -3,6 +3,7 @@ filetype off
 set nocompatible
 set encoding=utf-8
 set autochdir
+set omnifunc=syntaxcomplete#Complete
 
 set nu rnu
 set ruler
@@ -31,6 +32,8 @@ set laststatus=2
 set showmode
 set showcmd
 
+set tags=tags;/ 
+
 set hlsearch
 set incsearch
 set ignorecase
@@ -42,39 +45,23 @@ highlight Colorcolumn ctermbg=0 guibg=lightgrey
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'rip-rip/clang_complete'
-Plugin 'ycm-core/youcompleteme'
 Plugin 'mbbill/undotree'
-Plugin 'dense-analysis/ale'
 Plugin 'morhetz/gruvbox'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'itchyny/lightline.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
-Plugin 'Maximbaz/lightline-ale'
+Plugin 'ervandew/supertab'
 call vundle#end()
 filetype plugin indent on
 let mapleader = " "
-let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/youcompleteme/ycm_global_conf.py"
-let g:ycm_clangd_uses_ycmd_caching = 0
-let g:ycm_clangd_binary_path = exepath("clangd")
-let g:ycm_clangd_args = ['-log=verbose', '-pretty']
-let g:clang_library_path = "/usr/lib/llvm-10/lib/"
-"
-"ColorScheme
+
+"COLORSCHEME{{{
 colorscheme gruvbox
 autocmd vimenter * ++nested colorscheme gruvbox
 set background=dark
-
-" ALE: {{{
-let g:ale_sign_error = '•'
-let g:ale_sign_warning = '•'
-let g:ale_sign_info = '·'
-let g:ale_sign_style_error = '·'
-let g:ale_sign_style_warning = '·'
-let b:ale_linters = { 'c': ['clang']}
-" }}}
+"}}}
 
 " LIGHTLINE: {{{
 let g:lightline = {
@@ -82,11 +69,7 @@ let g:lightline = {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
       \ }
       \ }
-
-
-
 " }}}
-
 
 
 " REMAP : {{{ 
@@ -108,6 +91,8 @@ nnoremap <leader>sw :Ack *<CR>
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
 "
+nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
+
 vnoremap <Leader>a y:Ack <C-r>=fnameescape(@")<CR><CR>
 "
 nnoremap <C-j> :m .+1<CR>==
@@ -116,4 +101,9 @@ inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+"Jumps
+nnoremap <Leader>j :jumps<CR>
+"Tab navigation
+nnoremap <leader>t gt
+nnoremap <leader>T gT
 "}}}
