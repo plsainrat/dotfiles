@@ -26,8 +26,8 @@ set colorcolumn=100
 set signcolumn=yes
 
 set matchpairs+=<:> 
-set hidden
 set ttyfast
+set hidden
 set laststatus=2
 set showmode
 set showcmd
@@ -57,6 +57,10 @@ call vundle#end()
 filetype plugin indent on
 let mapleader = " "
 
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --hidden\  
+endif
+
 "COLORSCHEME{{{
 colorscheme gruvbox
 autocmd vimenter * ++nested colorscheme gruvbox
@@ -84,17 +88,20 @@ nnoremap <leader>u :UndotreeShow<CR>
 "Exploration Project view et Project search
 let NERDTreeWinSize = 25
 nnoremap <leader>pv :NERDTreeFind<CR>
+"deactivate higliht when not searching
+nnoremap <CR> :noh<CR><CR>
 "nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 nnoremap <leader>ps :Ack<SPACE>
 nnoremap <leader>sw :Ack *<CR>
 "Resize
 nnoremap <silent> <leader>+ :vertical resize +5<CR>
 nnoremap <silent> <leader>- :vertical resize -5<CR>
-"
+"follow tag in a new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
-
-vnoremap <Leader>a y:Ack <C-r>=fnameescape(@")<CR><CR>
-"
+"RipGrep :
+"Word under the cursor
+nnoremap <leader>rg :grep <C-r><C-w><CR>
+"Line Move
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <Esc>:m .+1<CR>==gi
@@ -102,7 +109,7 @@ inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 "Jumps
-nnoremap <Leader>j :jumps<CR>
+nnoremap <Leader>J :jumps<CR>
 "Tab navigation
 nnoremap <leader>t gt
 nnoremap <leader>T gT
