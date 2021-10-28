@@ -46,7 +46,8 @@ highlight Colorcolumn ctermbg=0 guibg=lightgrey
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'mbbill/undotree'
-Plugin 'morhetz/gruvbox'
+"Plugin 'morhetz/gruvbox'
+Plugin 'pineapplegiant/spaceduck'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
@@ -62,8 +63,8 @@ if executable('rg')
 endif
 
 "COLORSCHEME{{{
-colorscheme gruvbox
-autocmd vimenter * ++nested colorscheme gruvbox
+colorscheme spaceduck
+autocmd vimenter * ++nested colorscheme spaceduck
 set background=dark
 "}}}
 
