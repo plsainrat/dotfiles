@@ -18,6 +18,7 @@ set softtabstop=4
 set expandtab
 set noshiftround
 set scrolloff=3
+set directory^=$HOME/.vim/tmp//
 
 set undodir=~/.vim/undodir
 set undofile
@@ -54,6 +55,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'itchyny/lightline.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
 Plugin 'ervandew/supertab'
+Plugin 'dense-analysis/ale'
+"Plugin 'vim-syntastic/syntastic'  
 call vundle#end()
 filetype plugin indent on
 let mapleader = " "
@@ -63,20 +66,34 @@ if executable('rg')
 endif
 
 "COLORSCHEME{{{
-colorscheme spaceduck
-autocmd vimenter * ++nested colorscheme spaceduck
-set background=dark
-"}}}
+  if exists('+termguicolors')
+      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+endif
+
+   colorscheme spaceduck"}}}
 
 " LIGHTLINE: {{{
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
-      \ }
-      \ }
+    let g:lightline = {
+          \ 'colorscheme': 'spaceduck',
+          \ }
 " }}}
 
+"SYNTASTIC{{{
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"}}}
+
+"ALE{{{
+let g:ale_linters = {'cpp': ['clang']}
+"}}}
 " REMAP : {{{ 
 nnoremap <C-b> :make<CR>
 "Navigation entre fenetre
