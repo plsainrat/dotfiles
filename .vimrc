@@ -53,7 +53,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'itchyny/lightline.vim'
-Plugin 'shinchu/lightline-gruvbox.vim'
+"Plugin 'shinchu/lightline-gruvbox.vim'
 Plugin 'ervandew/supertab'
 Plugin 'dense-analysis/ale'
 "Plugin 'vim-syntastic/syntastic'  
@@ -77,6 +77,14 @@ endif
 " LIGHTLINE: {{{
     let g:lightline = {
           \ 'colorscheme': 'spaceduck',
+          \ 'active' : {
+          \     'left':[ [ 'mode', 'paste' ],
+          \              ['readonly', 'absolutepath','modified'],
+          \              ['readonly', 'funcPreview'] ]
+          \ },
+          \ 'component_function' : {
+          \     'funcPreview' : 'FuncPreview'
+          \ },
           \ }
 " }}}
 
@@ -132,3 +140,15 @@ nnoremap <Leader>J :jumps<CR>
 nnoremap <leader>t gt
 nnoremap <leader>T gT
 "}}}
+
+" FUNCTION : {{{
+"Current function name
+function FuncPreview()
+  let opening = search("^\\S.*)\\s*\\\(\\n\\\)\\={","bn")
+  let closing = search("^}","bn")
+  if opening > closing
+    return getline(opening)
+  else
+    return ""
+  endif
+endfunction
