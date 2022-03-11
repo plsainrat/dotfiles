@@ -53,6 +53,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'itchyny/lightline.vim'
+Plugin 'airblade/vim-gitgutter'
 "Plugin 'shinchu/lightline-gruvbox.vim'
 Plugin 'ervandew/supertab'
 Plugin 'dense-analysis/ale'
@@ -139,6 +140,8 @@ nnoremap <Leader>J :jumps<CR>
 "Tab navigation
 nnoremap <leader>t gt
 nnoremap <leader>T gT
+"Git Macro
+nnoremap <leader>gd :call GitDiff()<cr>
 "}}}
 
 " FUNCTION : {{{
@@ -152,3 +155,10 @@ function FuncPreview()
     return ""
   endif
 endfunction
+
+function GitDiff()
+    :silent write
+    :silent execute '!git diff --color=always -- ' . expand('%:p') . ' | less --RAW-CONTROL-CHARS'
+    :redraw!
+endfunction
+
