@@ -44,21 +44,22 @@ set listchars=tab:▸\ ,eol:¬
 
 highlight Colorcolumn ctermbg=0 guibg=lightgrey
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'mbbill/undotree'
-"Plugin 'morhetz/gruvbox'
-Plugin 'pineapplegiant/spaceduck'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'itchyny/lightline.vim'
-Plugin 'airblade/vim-gitgutter'
-"Plugin 'shinchu/lightline-gruvbox.vim'
-Plugin 'ervandew/supertab'
-Plugin 'dense-analysis/ale'
-"Plugin 'vim-syntastic/syntastic'  
-call vundle#end()
+call plug#begin()
+    Plug 'will133/vim-dirdiff'
+    Plug 'mbbill/undotree'
+    Plug 'pineapplegiant/spaceduck'
+    Plug 'mileszs/ack.vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'scrooloose/nerdtree'
+    Plug 'itchyny/lightline.vim'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'sheerun/vim-polyglot'
+    Plug 'bfrg/vim-cpp-modern'
+    Plug 'levelone/tequila-sunrise.vim'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+call plug#end()
+
 filetype plugin indent on
 let mapleader = " "
 
@@ -66,14 +67,12 @@ if executable('rg')
     set grepprg=rg\ --vimgrep\ --hidden\  
 endif
 
-"COLORSCHEME{{{
-  if exists('+termguicolors')
-      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-      set termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
 endif
-
-   colorscheme spaceduck"}}}
+colorscheme spaceduck
 
 " LIGHTLINE: {{{
     let g:lightline = {
@@ -89,16 +88,13 @@ endif
           \ }
 " }}}
 
-"SYNTASTIC{{{
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"}}}
+"Syntax
+
+let g:cpp_function_highlight = 1
+let g:cpp_attributes_higlight = 1
+let g:cpp_member_highlight = 1
+let g:cpp_simple_highlight = 1
 
 "ALE{{{
 let g:ale_linters = {'cpp': ['clang']}
@@ -114,7 +110,8 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 "Exploration Project view et Project search
 let NERDTreeWinSize = 25
-nnoremap <leader>pv :NERDTreeFind<CR>
+nnoremap <leader>nt :NERDTreeFind<CR>
+nnoremap <leader>root :0tabnew .<CR>
 "deactivate higliht when not searching
 nnoremap <CR> :noh<CR><CR>
 "nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
@@ -127,7 +124,7 @@ nnoremap <silent> <leader>- :vertical resize -5<CR>
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 "RipGrep :
 "Word under the cursor
-nnoremap <leader>rg :grep <C-r><C-w><CR>
+nnoremap <leader>rg :Rg <C-r><C-w><CR>
 "Line Move
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -142,7 +139,10 @@ nnoremap <leader>t gt
 nnoremap <leader>T gT
 "Git Macro
 nnoremap <leader>gd :call GitDiff()<cr>
+
+
 "}}}
+
 
 " FUNCTION : {{{
 "Current function name
