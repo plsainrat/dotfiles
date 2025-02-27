@@ -12,6 +12,7 @@ set noerrorbells
 set wrap
 set textwidth=79
 set formatoptions=tcqrn1
+set formatoptions-=cro
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -42,6 +43,9 @@ set smartcase
 set showmatch
 set listchars=tab:▸\ ,eol:¬
 
+set foldmethod=syntax
+set completeopt+=preview 
+set completeopt+=menuone
 highlight Colorcolumn ctermbg=0 guibg=lightgrey
 
 call plug#begin()
@@ -51,13 +55,16 @@ call plug#begin()
     Plug 'mileszs/ack.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'scrooloose/nerdtree'
+    Plug 'vim-scripts/DoxygenToolkit.vim'
     Plug 'itchyny/lightline.vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'sheerun/vim-polyglot'
     Plug 'bfrg/vim-cpp-modern'
+    Plug 'vim-airline/vim-airline'
     Plug 'levelone/tequila-sunrise.vim'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
+    Plug 'dense-analysis/ale'
 call plug#end()
 
 filetype plugin indent on
@@ -139,6 +146,9 @@ nnoremap <leader>t gt
 nnoremap <leader>T gT
 "Git Macro
 nnoremap <leader>gd :call GitDiff()<cr>
+
+"Doxygene
+nnoremap <leader>d :Dox<cr>
 
 
 "}}}
