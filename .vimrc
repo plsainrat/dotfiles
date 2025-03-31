@@ -132,6 +132,8 @@ nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
 "RipGrep :
 "Word under the cursor
 nnoremap <leader>rg :Rg <C-r><C-w><CR>
+let g:fzf_vim = {}
+let g:fzf_vim.buffers_jump = 0
 "Line Move
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -144,6 +146,10 @@ nnoremap <Leader>J :jumps<CR>
 "Tab navigation
 nnoremap <leader>t gt
 nnoremap <leader>T gT
+"Buffer navigation
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bn :bp<CR>
+nnoremap <leader>bb :Buffers<CR>
 "Git Macro
 nnoremap <leader>gd :call GitDiff()<cr>
 
