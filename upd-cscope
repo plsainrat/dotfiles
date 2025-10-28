@@ -1,0 +1,5 @@
+#!/bin/bash
+ctags -R
+find $PWD -name '*.c' -o -name '*.h' > ~/.config/cscope/cscope.files
+cscope -i ~/.config/cscope/cscope.files -b -R
+CSCOPE_DB=$PWD/cscope.out; export CSCOPE_DB   

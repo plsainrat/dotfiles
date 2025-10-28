@@ -65,7 +65,22 @@ call plug#begin()
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'dense-analysis/ale'
+    Plug 'dpelle/vim-LanguageTool'
+    Plug 'alonswartz/notesium', { 'rtp': 'vim' }
+    Plug 'godlygeek/tabular'
+    Plug 'preservim/vim-markdown'
 call plug#end()
+
+source ~/.vim/autoload/cscope_maps.vim
+
+let g:languagetool_jar='$HOME/languagetool/LanguageTool-5.2/languagetool-commandline.jar'
+let g:languagetool_lang='fr'
+
+
+nnoremap <leader>ltc  :LanguageToolCheck <CR>
+nnoremap <leader>ltcl :LanguageToolClear <CR>
+
+
 
 filetype plugin indent on
 let mapleader = " "
@@ -156,6 +171,8 @@ nnoremap <leader>gd :call GitDiff()<cr>
 "Doxygene
 nnoremap <leader>d :Dox<cr>
 
+"Markdowm
+let g:notesium_bin='notesium-linux-amd64'
 
 "}}}
 
