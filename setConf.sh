@@ -2,7 +2,7 @@
 set -e
 
 # === CONFIG ===
-DOTFILES_REPO="https://github.com/yourusername/dotfiles.git"
+DOTFILES_REPO="git@github.com:plsainrat/dotfiles.git"
 PKGS="git vim i3 alacritty curl"
 
 # === CHECKS ===
