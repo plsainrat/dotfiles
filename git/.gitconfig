@@ -1,0 +1,13 @@
+[user]
+	name = plsainrat
+	email = pl.sainrat@outlook.com
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[safe]
+	directory = /home/pasainrat/GDI/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/02-Sources/Gyrano
+	directory = /mnt/usb/GDI/06-NVE3-ObsoGyro/02-Sources/Gyrano/.git
+	directory = /home/pasainrat/GDI/06-NVE3-ObsoGyro/02-Sources/Gyrano
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true

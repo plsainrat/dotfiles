@@ -1,0 +1,20 @@
+[general]
+import = [
+    "themes/spaceduck.toml"
+]
+
+[window]
+padding = { x = 2, y = 2 }
+dynamic_padding = true
+decorations_theme_variant = "Dark"
+title = ""
+dynamic_title = true
+
+[mouse]
+hide_when_typing = true
+
+
+[keyboard]
+bindings =[ { key="N",   mods="Super|Shift", action="SpawnNewInstance"},]
+
+
