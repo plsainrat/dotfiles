@@ -29,7 +29,13 @@ fi
 # === SYMLINKS ===
 ln -sf ~/.dotfiles/alacritty ~/.config/alacritty
 ln -sf ~/.dotfiles/i3 ~/.config/i3
-ln -sf ~/.dotfiles/vimrc ~/.vimrc
+ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
+
+# === Vim ===
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +'PlugInstall --sync' +qa
+
 
 # === OPTIONAL: Additional setup ===
 # Example: install fonts or plugins
