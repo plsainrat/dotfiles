@@ -167,6 +167,8 @@ nnoremap <leader>bn :bp<CR>
 nnoremap <leader>bb :Buffers<CR>
 "Git Macro
 nnoremap <leader>gd :call GitDiff()<cr>
+nnoremap <leader>gdh :diffget //2<CR>
+nnoremap <leader>gdl :diffget //3<CR>
 
 "Doxygene
 nnoremap <leader>d :Dox<cr>
