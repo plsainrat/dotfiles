@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 # === CONFIG ===
 DOTFILES_REPO="https://github.com/yourusername/dotfiles.git"
@@ -30,6 +29,7 @@ fi
 ln -sf ~/.dotfiles/alacritty ~/.config/alacritty
 ln -sf ~/.dotfiles/i3 ~/.config/i3
 ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
+sudo ln -sf ~/.dotfiles/polybar/config.ini /etc/polybar/config.ini
 
 # === Vim ===
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
