@@ -3,7 +3,7 @@ set -e
 
 # === CONFIG ===
 DOTFILES_REPO="https://github.com/yourusername/dotfiles.git"
-PKGS="git vim i3 alacritty curl"
+PKGS="git vim i3 alacritty curl polybar"
 
 # === CHECKS ===
 echo "[*] Updating system..."
