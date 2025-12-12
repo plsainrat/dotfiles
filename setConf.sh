@@ -2,7 +2,7 @@
 
 # === CONFIG ===
 DOTFILES_REPO="https://github.com/yourusername/dotfiles.git"
-PKGS="git vim i3 alacritty curl polybar"
+PKGS="git vim i3 alacritty curl polybar clang bear python3"
 
 # === CHECKS ===
 echo "[*] Updating system..."

@@ -69,12 +69,13 @@ call plug#begin()
     Plug 'alonswartz/notesium', { 'rtp': 'vim' }
     Plug 'godlygeek/tabular'
     Plug 'preservim/vim-markdown'
+    Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 
-source ~/.vim/autoload/cscope_maps.vim
 
-let g:languagetool_jar='$HOME/languagetool/LanguageTool-5.2/languagetool-commandline.jar'
-let g:languagetool_lang='fr'
+set spelllang=fr
+let g:languagetool_jar='/home/pasainrat/language/LanguageTool-5.2/languagetool-commandline.jar'
+"let g:languagetool_lang='fr'
 
 
 nnoremap <leader>ltc  :LanguageToolCheck <CR>
@@ -120,6 +121,7 @@ let g:cpp_simple_highlight = 1
 
 "ALE{{{
 let g:ale_linters = {'cpp': ['clang']}
+let g:ale_c_parse_makefile = 1
 "}}}
 " REMAP : {{{ 
 nnoremap <C-b> :make<CR>
@@ -163,7 +165,7 @@ nnoremap <leader>t gt
 nnoremap <leader>T gT
 "Buffer navigation
 nnoremap <leader>bn :bn<CR>
-nnoremap <leader>bn :bp<CR>
+nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bb :Buffers<CR>
 "Git Macro
 nnoremap <leader>gd :call GitDiff()<cr>
@@ -175,9 +177,16 @@ nnoremap <leader>d :Dox<cr>
 
 "Markdowm
 let g:notesium_bin='notesium-linux-amd64'
+let g:NOTESIUM_DIR='/home/pasainrat/Note'
 
 "}}}
 
+"YCM
+nnoremap <leader>ss <Plug>(YCMFindSymbolInWorkspace)
+nnoremap <C-\> :YcmCompleter GoTo
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_enable_diagnostic_signs = 1
 
 " FUNCTION : {{{
 "Current function name
