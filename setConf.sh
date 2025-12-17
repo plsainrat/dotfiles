@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # === CONFIG ===
-DOTFILES_REPO="https://github.com/yourusername/dotfiles.git"
+DOTFILES_REPO="https://github.com/plsainrat/dotfiles.git"
 PKGS="git vim i3 alacritty curl polybar clang bear python3"
 
 # === CHECKS ===
@@ -29,6 +29,7 @@ fi
 ln -sf ~/.dotfiles/alacritty ~/.config/alacritty
 ln -sf ~/.dotfiles/i3 ~/.config/i3
 ln -sf ~/.dotfiles/vim/.vimrc ~/.vimrc
+ln -sf ~/.dotfiles/git/.gitconfig ~/.gitconfig
 sudo ln -sf ~/.dotfiles/polybar/config.ini /etc/polybar/config.ini
 
 # === Vim ===
