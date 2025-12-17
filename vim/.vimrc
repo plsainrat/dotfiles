@@ -69,6 +69,7 @@ call plug#begin()
     Plug 'alonswartz/notesium', { 'rtp': 'vim' }
     Plug 'godlygeek/tabular'
     Plug 'preservim/vim-markdown'
+    Plug 'wiwiiwiii/vim-diagon'
 call plug#end()
 
 source ~/.vim/autoload/cscope_maps.vim

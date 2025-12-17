@@ -2,11 +2,14 @@
 	name = plsainrat
 	email = pl.sainrat@outlook.com
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log --color --graph --all --pretty=format:'%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %n %C(yellow) %b ' --abbrev-commit
 [safe]
 	directory = /home/pasainrat/GDI/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/02-Sources/Gyrano
 	directory = /mnt/usb/GDI/06-NVE3-ObsoGyro/02-Sources/Gyrano/.git
 	directory = /home/pasainrat/GDI/06-NVE3-ObsoGyro/02-Sources/Gyrano
+	directory = /home/gdi/GDI/01-Projets/06-NVE3-ObsoGyro/02-Sources/Gyrano
+	directory = /mnt/usb/GDI/01-Projets/06-NVE3/Gyrano/.git
+	directory = /mnt/usb/GDI/01-Projets/06-NVE3/Gyrano
 [init]
 	defaultBranch = main
 [push]
