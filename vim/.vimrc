@@ -10,7 +10,7 @@ set ruler
 set novisualbell
 set noerrorbells 
 set wrap
-set textwidth=79
+set textwidth=0
 set formatoptions=tcqrn1
 set formatoptions-=cro
 set tabstop=4
@@ -71,6 +71,8 @@ call plug#begin()
     Plug 'preservim/vim-markdown'
     Plug 'wiwiiwiii/vim-diagon'
     Plug 'ycm-core/YouCompleteMe'
+    Plug 'mfukar/robotframework-vim'
+    Plug 'mzlogin/vim-markdown-toc'
 call plug#end()
 
 
@@ -183,7 +185,7 @@ let g:NOTESIUM_DIR='/home/pasainrat/Note'
 
 "YCM
 nnoremap <leader>ss <Plug>(YCMFindSymbolInWorkspace)
-nnoremap <C-\> :YcmCompleter GoTo
+nnoremap <C-\> :tab split \| YcmCompleter GoTo
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_enable_diagnostic_signs = 1

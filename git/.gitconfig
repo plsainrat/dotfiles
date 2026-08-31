@@ -1,6 +1,10 @@
 [user]
 	name = plsainrat
 	email = pl.sainrat@outlook.com
+[core]
+	editor = "vim"
+	fileMode = false
+	
 [alias]
 	lg = log --color --graph --all --pretty=format:'%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %n %C(yellow) %b ' --abbrev-commit
 [safe]
@@ -10,7 +14,15 @@
 	directory = /home/gdi/GDI/01-Projets/06-NVE3-ObsoGyro/02-Sources/Gyrano
 	directory = /mnt/usb/GDI/01-Projets/06-NVE3/Gyrano/.git
 	directory = /mnt/usb/GDI/01-Projets/06-NVE3/Gyrano
+	directory = /mnt/usb/GDI/01-Projet/01-NVE3/Gyrano
+	directory = /mnt/usb/GDI/01-Projet/01-NVE3/Gyrano
+	directory = /mnt/usb/GDI/Gyrano
+	directory = /home/gdi/GDI/01-Projets/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/02-Sources/Gyrano
 [init]
 	defaultBranch = main
 [push]
 	autoSetupRemote = true
+[diff]
+	tool = vimdiff
+[protocol "file"]
+	allow = always
