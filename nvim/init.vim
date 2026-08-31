@@ -20,6 +20,7 @@ set expandtab
 set noshiftround
 set scrolloff=3
 set directory^=$HOME/.vim/tmp//
+set conceallevel=2
 
 set undodir=~/.vim/undodir
 set undofile
@@ -66,14 +67,70 @@ call plug#begin()
     Plug 'junegunn/fzf.vim'
     Plug 'dense-analysis/ale'
     Plug 'dpelle/vim-LanguageTool'
-    Plug 'alonswartz/notesium', { 'rtp': 'vim' }
-    Plug 'godlygeek/tabular'
-    Plug 'preservim/vim-markdown'
-    Plug 'ycm-core/YouCompleteMe'
     Plug 'ArthurSonzogni/Diagon'
     Plug 'wiwiiwiii/vim-diagon'
+    Plug 'nvim-lua/plenary.nvim' 
+    Plug 'obsidian-nvim/obsidian.nvim'
+    Plug 'meanderingprogrammer/render-markdown.nvim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'saadparwaiz1/cmp_luasnip'
 call plug#end()
 
+
+lua << EOF
+require('obsidian').setup({
+  workspaces = {
+    { name = 'notes', path = '/home/pasainrat/vaults/notes-perso' },
+  },
+  legacy_commands = false,
+})
+
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+cmp.setup({
+  snippet = {
+    expand = function(args) luasnip.lsp_expand(args.body) end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+vim.lsp.config('clangd', {
+  capabilities = capabilities,
+  cmd = {
+    'clangd',
+    '--background-index',
+    '--query-driver=/usr/bin/arm-none-eabi-*',
+  },
+})
+
+vim.lsp.enable('clangd')
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    vim.keymap.set('n', '<C-\\>', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', '<leader>ss', vim.lsp.buf.workspace_symbol, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+  end,
+})
+EOF
 
 set spelllang=fr
 let g:languagetool_jar='/home/pasainrat/language/LanguageTool-5.2/languagetool-commandline.jar'
@@ -183,12 +240,6 @@ let g:NOTESIUM_DIR='/home/pasainrat/Note'
 
 "}}}
 
-"YCM
-nnoremap <leader>ss <Plug>(YCMFindSymbolInWorkspace)
-nnoremap <C-\> :YcmCompleter GoTo
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_enable_diagnostic_signs = 1
 
 " FUNCTION : {{{
 "Current function name
