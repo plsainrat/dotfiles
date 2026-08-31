@@ -77,10 +77,15 @@ call plug#begin()
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'L3MON4D3/LuaSnip'
     Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'echasnovski/mini.pick'
+Plug 'echasnovski/mini.extra'
 call plug#end()
 
 
 lua << EOF
+
+require('mini.pick').setup()
+require('mini.extra').setup()
 require('obsidian').setup({
   workspaces = {
     { name = 'notes', path = '/home/pasainrat/vaults/notes-perso' },
@@ -130,6 +135,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
   end,
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    local pick_lsp = require('mini.extra').pickers.lsp
+
+    vim.keymap.set('n', '<C-\\>', function() pick_lsp({ scope = 'definition' }) end, opts)
+    vim.keymap.set('n', 'gD', function() pick_lsp({ scope = 'declaration' }) end, opts)
+    vim.keymap.set('n', 'gr', function() pick_lsp({ scope = 'references' }) end, opts)
+    vim.keymap.set('n', 'gi', function() pick_lsp({ scope = 'implementation' }) end, opts)
+    vim.keymap.set('n', 'gy', function() pick_lsp({ scope = 'type_definition' }) end, opts)
+    vim.keymap.set('n', '<leader>ss', function() pick_lsp({ scope = 'workspace_symbol' }) end, opts)
+
+    -- unchanged
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+  end,
+})
+
+require('mini.pick').setup({
+  mappings = {
+    move_down = '<C-j>',
+    move_up = '<C-k>',
+  },
+})
+
 EOF
 
 set spelllang=fr
