@@ -49,6 +49,8 @@ set completeopt+=preview
 set completeopt+=menuone
 highlight Colorcolumn ctermbg=0 guibg=lightgrey
 
+let mapleader = " "
+
 call plug#begin()
     Plug 'will133/vim-dirdiff'
     Plug 'mbbill/undotree'
@@ -78,7 +80,8 @@ call plug#begin()
     Plug 'L3MON4D3/LuaSnip'
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'echasnovski/mini.pick'
-Plug 'echasnovski/mini.extra'
+    Plug 'echasnovski/mini.extra'
+    Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
 
@@ -88,9 +91,19 @@ require('mini.pick').setup()
 require('mini.extra').setup()
 require('obsidian').setup({
   workspaces = {
-    { name = 'notes', path = '/home/pasainrat/vaults/notes-perso' },
+    { name = 'notes', path = '/home/pasainrat/vaults/notes-perso/work-notes' },
   },
   legacy_commands = false,
+  ui = { enable = false },          -- render-markdown handles the display
+
+  daily_notes = {
+    folder = 'Dailies',             -- relative to the vault root
+    date_format = '%Y-%m-%d',       -- file name: dailies/2026-10-02.md
+    alias_format = '%A %d %B %Y',   -- human-readable alias in the frontmatter
+    default_tags = { 'daily-notes' },
+    workdays_only = true,           -- yesterday/tomorrow skip weekends
+    template = nil,                 -- see below
+  },
 })
 
 local cmp = require('cmp')
@@ -124,22 +137,13 @@ vim.lsp.config('clangd', {
 })
 
 vim.lsp.enable('clangd')
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local opts = { buffer = args.buf }
-    vim.keymap.set('n', '<C-\\>', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', '<leader>ss', vim.lsp.buf.workspace_symbol, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-  end,
-})
 
 vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('PaulLsp', { clear = true }),
   callback = function(args)
     local opts = { buffer = args.buf }
     local pick_lsp = require('mini.extra').pickers.lsp
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     vim.keymap.set('n', '<C-\\>', function() pick_lsp({ scope = 'definition' }) end, opts)
     vim.keymap.set('n', 'gD', function() pick_lsp({ scope = 'declaration' }) end, opts)
@@ -148,13 +152,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gy', function() pick_lsp({ scope = 'type_definition' }) end, opts)
     vim.keymap.set('n', '<leader>ss', function() pick_lsp({ scope = 'workspace_symbol' }) end, opts)
 
-    -- unchanged
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
+    vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+
+    -- clangd-only: jump between foo.c and foo.h
+    if client and client.name == 'clangd' then
+      vim.keymap.set('n', '<leader>sh', '<cmd>LspClangdSwitchSourceHeader<CR>', opts)
+    end
   end,
 })
 
@@ -164,6 +172,21 @@ require('mini.pick').setup({
     move_up = '<C-k>',
   },
 })
+
+require('telescope').setup({
+  defaults = {
+    mappings = {
+      i = {
+        ['<C-j>'] = require('telescope.actions').move_selection_next,
+        ['<C-k>'] = require('telescope.actions').move_selection_previous,
+      },
+    },
+  },
+})
+
+require('toc').setup()
+
+
 
 EOF
 
@@ -178,7 +201,6 @@ nnoremap <leader>ltcl :LanguageToolClear <CR>
 
 
 filetype plugin indent on
-let mapleader = " "
 
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --hidden\  
@@ -214,8 +236,8 @@ let g:cpp_member_highlight = 1
 let g:cpp_simple_highlight = 1
 
 "ALE{{{
-let g:ale_linters = {'cpp': ['clang']}
-let g:ale_c_parse_makefile = 1
+let g:ale_linters = {'c': [], 'cpp': []}
+let g:ale_disable_lsp = 1
 "}}}
 " REMAP : {{{ 
 nnoremap <C-b> :make<CR>

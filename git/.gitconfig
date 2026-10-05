@@ -2,7 +2,7 @@
 	name = plsainrat
 	email = pl.sainrat@outlook.com
 [core]
-	editor = "vim"
+	editor = "nvim"
 	fileMode = false
 	
 [alias]
@@ -26,3 +26,5 @@
 	tool = vimdiff
 [protocol "file"]
 	allow = always
+[https]
+	sslCAInfo = /usr/local/share/ca-certificates/chain-vm-gitea.gdi.intra.pem

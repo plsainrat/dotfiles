@@ -1,3 +1,6 @@
+[terminal.shell]
+program="/bin/zsh"
+
 [general]
 import = [
     "themes/spaceduck.toml"
