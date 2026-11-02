@@ -1,0 +1,8 @@
+require('config.completion')
+require('config.lsp')
+require('config.pickers')
+require('config.notes')
+require('config.robot')
+require('config.python')
+require('config.yaml')
+require('config.toc').setup()

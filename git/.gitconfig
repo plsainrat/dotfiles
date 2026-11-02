@@ -1,6 +1,6 @@
 [user]
-	name = plsainrat
-	email = pl.sainrat@outlook.com
+	name = pasainrat
+	email = paul.sainrat.external@gdi-simulation.fr
 [core]
 	editor = "nvim"
 	fileMode = false
@@ -18,6 +18,9 @@
 	directory = /mnt/usb/GDI/01-Projet/01-NVE3/Gyrano
 	directory = /mnt/usb/GDI/Gyrano
 	directory = /home/gdi/GDI/01-Projets/06-NVE3-ObsoGyro/06-NVE3-ObsoGyro/02-Sources/Gyrano
+	directory = /mnt/shared/01-Projets/09-STMSecuredOS/02-Src/ServerSecuredOs
+	directory = /mnt/shared/02-Sources/02-STC-B2M/portage_hg_git/mercurial-to-git
+	directory = /mnt/shared/02-Sources/02-STC-B2M/portage_hg_git/mercurial-to-git/output/git_BEP
 [init]
 	defaultBranch = main
 [push]
@@ -28,3 +31,5 @@
 	allow = always
 [https]
 	sslCAInfo = /usr/local/share/ca-certificates/chain-vm-gitea.gdi.intra.pem
+[http "https://gitea.gdi.intra:3000/"]
+	sslVerify = false

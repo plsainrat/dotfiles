@@ -82,113 +82,11 @@ call plug#begin()
     Plug 'echasnovski/mini.pick'
     Plug 'echasnovski/mini.extra'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'snapwich/obsidian-tasks.nvim'
+    Plug 'mfukar/robotframework-vim'
 call plug#end()
 
-
-lua << EOF
-
-require('mini.pick').setup()
-require('mini.extra').setup()
-require('obsidian').setup({
-  workspaces = {
-    { name = 'notes', path = '/home/pasainrat/vaults/notes-perso/work-notes' },
-  },
-  legacy_commands = false,
-  ui = { enable = false },          -- render-markdown handles the display
-
-  daily_notes = {
-    folder = 'Dailies',             -- relative to the vault root
-    date_format = '%Y-%m-%d',       -- file name: dailies/2026-10-02.md
-    alias_format = '%A %d %B %Y',   -- human-readable alias in the frontmatter
-    default_tags = { 'daily-notes' },
-    workdays_only = true,           -- yesterday/tomorrow skip weekends
-    template = nil,                 -- see below
-  },
-})
-
-local cmp = require('cmp')
-local luasnip = require('luasnip')
-
-cmp.setup({
-  snippet = {
-    expand = function(args) luasnip.lsp_expand(args.body) end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-vim.lsp.config('clangd', {
-  capabilities = capabilities,
-  cmd = {
-    'clangd',
-    '--background-index',
-    '--query-driver=/usr/bin/arm-none-eabi-*',
-  },
-})
-
-vim.lsp.enable('clangd')
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('PaulLsp', { clear = true }),
-  callback = function(args)
-    local opts = { buffer = args.buf }
-    local pick_lsp = require('mini.extra').pickers.lsp
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-    vim.keymap.set('n', '<C-\\>', function() pick_lsp({ scope = 'definition' }) end, opts)
-    vim.keymap.set('n', 'gD', function() pick_lsp({ scope = 'declaration' }) end, opts)
-    vim.keymap.set('n', 'gr', function() pick_lsp({ scope = 'references' }) end, opts)
-    vim.keymap.set('n', 'gi', function() pick_lsp({ scope = 'implementation' }) end, opts)
-    vim.keymap.set('n', 'gy', function() pick_lsp({ scope = 'type_definition' }) end, opts)
-    vim.keymap.set('n', '<leader>ss', function() pick_lsp({ scope = 'workspace_symbol' }) end, opts)
-
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
-    vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
-    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-
-    -- clangd-only: jump between foo.c and foo.h
-    if client and client.name == 'clangd' then
-      vim.keymap.set('n', '<leader>sh', '<cmd>LspClangdSwitchSourceHeader<CR>', opts)
-    end
-  end,
-})
-
-require('mini.pick').setup({
-  mappings = {
-    move_down = '<C-j>',
-    move_up = '<C-k>',
-  },
-})
-
-require('telescope').setup({
-  defaults = {
-    mappings = {
-      i = {
-        ['<C-j>'] = require('telescope.actions').move_selection_next,
-        ['<C-k>'] = require('telescope.actions').move_selection_previous,
-      },
-    },
-  },
-})
-
-require('toc').setup()
-
-
-
-EOF
+lua require('config')
 
 set spelllang=fr
 let g:languagetool_jar='/home/pasainrat/language/LanguageTool-5.2/languagetool-commandline.jar'
